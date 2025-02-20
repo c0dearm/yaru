@@ -6,11 +6,25 @@ Thank you for considering contributing to this project! Here are some guidelines
 
 1. **Fork the Repository**: Fork the project repository to your GitHub account.
 2. **Clone the Repository**: Clone your forked repository to your local machine.
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/yaru.git
+   cd yaru
+   ```
 3. **Create a Branch**: Create a new branch for your feature or bug fix.
+   ```bash
+    git checkout -b your-branch-name
+   ```
 4. **Make Changes**: Make your changes and ensure they are well-documented.
 5. **Test Your Changes**: Run any existing tests and add new tests if necessary.
 6. **Commit Your Changes**: Commit your changes with a clear and descriptive commit message.
+   ```bash
+    git add .
+    git commit -m "Description of your changes"
+   ```
 7. **Push Your Changes**: Push your changes to your forked repository.
+   ```bash
+    git push origin your-branch-name
+   ```
 8. **Create a Pull Request**: Open a pull request from your branch to the main repository.
 
 ## Code Style
