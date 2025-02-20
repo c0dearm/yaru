@@ -3,7 +3,7 @@
 [![image](https://img.shields.io/pypi/v/yaru.svg)](https://pypi.python.org/pypi/yaru)
 [![image](https://img.shields.io/pypi/l/yaru.svg)](https://pypi.python.org/pypi/yaru)
 [![image](https://img.shields.io/pypi/pyversions/yaru.svg)](https://pypi.python.org/pypi/yaru)
-[![Actions status](https://github.com/c0dearm/yaru/actions/workflows/ci.yml/badge.svg)](https://github.com/c0dearm/yaru/actions)
+[![image](https://github.com/c0dearm/yaru/actions/workflows/test.yml/badge.svg)](https://github.com/c0dearm/yaru/actions)
 
 Write and manage your project's development scripts with modern Python syntax.
 
