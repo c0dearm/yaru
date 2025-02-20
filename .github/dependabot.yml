@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+# uv and pre-commit are not yet supported
+# https://github.com/dependabot/dependabot-core/issues/10478
+# https://github.com/dependabot/dependabot-core/issues/1524
