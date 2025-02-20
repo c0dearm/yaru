@@ -3,7 +3,7 @@ name = "yaru"
 version = "0.1.0"
 description = "Write and manage your project's development scripts with modern Python syntax"
 readme = "README.md"
-license = "LICENSE"
+license = { file = "LICENSE" }
 requires-python = ">=3.12"
 authors = [{ name = "Aitor Ruano Miralles", email = "codearm@pm.me" }]
 maintainers = [{ name = "Aitor Ruano Miralles", email = "codearm@pm.me" }]
