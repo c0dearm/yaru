@@ -34,6 +34,10 @@ pip install yaru
 
 Yaru's documentation is available at [https://github.com/c0dearm/yaru](https://github.com/c0dearm/yaru).
 
+## Contributing
+
+We welcome contributions! Please read our [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines on how to contribute to this project.
+
 ## Features
 
 ### A single decorator to rule them all
