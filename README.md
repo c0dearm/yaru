@@ -58,7 +58,7 @@ def add_numbers(c: Context, a: int, b: int) -> None:
 The decorated functions must be discovered by `yaru`, so they need to be in a module named `commands` at
 the root of your project, for example a `commands.py` file.
 
-The `add_numbers` command is not invokable through the cli, this is the output of `yaru --help`:
+The `add_numbers` command is now invokable through the cli, this is the output of `yaru --help`:
 
 ```
 usage: yaru [-h] {add-numbers} ...
@@ -90,7 +90,7 @@ options:
 
 Running the command `yaru add-numbers 42 69` in your terminal will output `111`.
 
-### Automatated command metadata
+### Automated command metadata
 
 The help text for the cli command is automatically parsed from the comments immiediatelly preceding the decorated function.
 Similarly, the command's description is obtained from the function's docstrings.
@@ -182,6 +182,10 @@ def add_numbers(c: Context, a: int, b: int) -> None:
 ```
 
 The behavior when executed is exactly the same.
+
+## Contributing
+
+We welcome contributions! Please read our [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines on how to contribute to this project.
 
 ## Acknowledgements
 
