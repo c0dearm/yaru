@@ -9,7 +9,7 @@ it should never be part of a project's production dependencies.
 ## Reporting a vulnerability
 
 If you have found a possible vulnerability that is not excluded by the above
-[scope](#scope-of-security-vulnerabilities), please email `security at astral dot sh`.
+[scope](#scope-of-security-vulnerabilities), please email `codearm at pm dot me`.
 
 ## Bug bounties
 
