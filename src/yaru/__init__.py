@@ -3,7 +3,8 @@ import os
 import sys
 from importlib import import_module
 
-from yaru.command import Arg, Command, command
+from yaru.argument import Arg
+from yaru.command import Command, command
 from yaru.context import Context
 
 
