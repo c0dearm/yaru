@@ -1,6 +1,6 @@
 [project]
 name = "yaru"
-version = "0.1.0"
+version = "0.2.0"
 description = "Write and manage your project's development scripts with modern Python syntax"
 readme = "README.md"
 license = { file = "LICENSE" }
