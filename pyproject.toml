@@ -24,7 +24,6 @@ classifiers = [
     "Topic :: Software Development",
     "Typing :: Typed",
 ]
-
 [project.urls]
 Homepage = "https://github.com/c0dearm/yaru"
 Documentation = "https://github.com/c0dearm/yaru"

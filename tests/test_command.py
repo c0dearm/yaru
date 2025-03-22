@@ -1,181 +1,12 @@
-from argparse import BooleanOptionalAction, RawTextHelpFormatter
+from argparse import RawTextHelpFormatter
 from functools import partial
 from inspect import Parameter
-from typing import Annotated, Callable
-from unittest.mock import Mock, _Call, call, patch
+from unittest.mock import Mock, call, patch
 
 import pytest
 
-from yaru.command import Arg, Command, _CommandArgument, command
+from yaru.command import Command, command
 from yaru.context import Context
-from yaru.exceptions import (
-    InvalidAnnotationTypeError,
-    InvalidArgumentTypeHintError,
-    MissingArgumentTypeHintError,
-    YaruError,
-)
-
-
-@pytest.mark.parametrize(
-    "command_argument",
-    [
-        _CommandArgument("name", int, "help", "metavar"),
-    ],
-)
-def test_command_argument_init(command_argument: _CommandArgument) -> None:
-    assert command_argument.name == "name"
-    assert command_argument.default is int
-    assert command_argument.help == "help"
-    assert command_argument.metavar == "metavar"
-
-
-@pytest.mark.parametrize(
-    ["default", "expected"], [(0, True), (None, True), (_CommandArgument._Empty, False)]
-)
-def test_command_argument_is_optional(default: Callable, expected: bool) -> None:
-    assert _CommandArgument("name", default=default).is_optional == expected
-
-
-@pytest.mark.parametrize("arg_type", [int, str, float, bool])
-def test_command_argument_arg_type(arg_type: type) -> None:
-    assert _CommandArgument[arg_type]("name").arg_type is arg_type
-
-
-@pytest.mark.parametrize(
-    ["literal", "expected"],
-    [("1", True), ("0", False), ("True", True), ("False", False)],
-)
-def test_command_argument_parse_literal_as_boolean(
-    literal: str, expected: bool
-) -> None:
-    assert _CommandArgument.parse_literal_as_boolean(literal) == expected
-
-
-@pytest.mark.parametrize(
-    ["parameter", "expected"],
-    [
-        # Parameter("name", Parameter.POSITIONAL_OR_KEYWORD),
-        (
-            Parameter("name", Parameter.POSITIONAL_OR_KEYWORD, annotation=int),
-            _CommandArgument[int](  # type: ignore
-                "name", default=_CommandArgument._Empty, help=None, metavar=None
-            ),
-        ),
-        (
-            Parameter(
-                "name", Parameter.POSITIONAL_OR_KEYWORD, default=0, annotation=int
-            ),
-            _CommandArgument[int]("name", default=0, help=None, metavar=None),  # type: ignore
-        ),
-        (
-            Parameter(
-                "name",
-                Parameter.POSITIONAL_OR_KEYWORD,
-                annotation=tuple[int],
-            ),
-            _CommandArgument[int](  # type: ignore
-                "name", default=_CommandArgument._Empty, help=None, metavar=None
-            ),
-        ),
-        (
-            Parameter(
-                "name",
-                Parameter.POSITIONAL_OR_KEYWORD,
-                annotation=Annotated[int, Arg(help="help", metavar="metavar")],
-            ),
-            _CommandArgument[int](  # type: ignore
-                "name", default=_CommandArgument._Empty, help="help", metavar="metavar"
-            ),
-        ),
-    ],
-)
-def test_command_argument_from_paramater_ok(
-    parameter: Parameter, expected: _CommandArgument
-) -> None:
-    argument = _CommandArgument.from_parameter(parameter)
-    assert argument.name == expected.name
-    assert argument.arg_type == expected.arg_type
-    assert argument.default == expected.default
-    assert argument.help == expected.help
-    assert argument.metavar == expected.metavar
-
-
-@pytest.mark.parametrize(
-    ["parameter", "exception"],
-    [
-        (
-            Parameter("name", Parameter.POSITIONAL_OR_KEYWORD),
-            MissingArgumentTypeHintError,
-        ),
-        (
-            Parameter(
-                "name", Parameter.POSITIONAL_OR_KEYWORD, annotation=Annotated[int, str]
-            ),
-            InvalidAnnotationTypeError,
-        ),
-        (
-            Parameter(
-                "name",
-                Parameter.POSITIONAL_OR_KEYWORD,
-                annotation=Annotated[int, str, str],
-            ),
-            InvalidArgumentTypeHintError,
-        ),
-    ],
-)
-def test_command_argument_from_paramater_invalid(
-    parameter: Parameter, exception: type[YaruError]
-) -> None:
-    with pytest.raises(exception):
-        _CommandArgument.from_parameter(parameter)
-
-
-@pytest.mark.parametrize(
-    ["arg_type", "default", "call"],
-    [
-        (
-            bool,
-            False,
-            call(
-                "--name",
-                action=BooleanOptionalAction,
-                default=False,
-                help="help",
-                metavar="metavar",
-            ),
-        ),
-        (
-            bool,
-            _CommandArgument._Empty,
-            call(
-                "name",
-                type=_CommandArgument.parse_literal_as_boolean,
-                help="help",
-                metavar="metavar",
-            ),
-        ),
-        (
-            int,
-            0,
-            call("--name", type=int, default=0, help="help", metavar="metavar"),
-        ),
-        (
-            int,
-            _CommandArgument._Empty,
-            call("name", type=int, help="help", metavar="metavar"),
-        ),
-    ],
-)
-def test_command_argument_add_to_parser(
-    arg_type: Callable, default: Callable, call: _Call
-) -> None:
-    mock_add_argument = Mock()
-
-    argument = _CommandArgument[arg_type](
-        "name", default=default, help="help", metavar="metavar"
-    )
-    argument.add_to_parser(Mock(add_argument=mock_add_argument))
-    mock_add_argument.assert_has_calls([call])
 
 
 @pytest.mark.parametrize(
@@ -232,7 +63,7 @@ def test_command_parse_description() -> None:
 def test_command_parse_parameters() -> None:
     def function_with_args(a: int, b: str): ...
 
-    with patch("yaru.command._CommandArgument.from_parameter") as mock_from_parameter:
+    with patch("yaru.command.CommandArgument.from_parameter") as mock_from_parameter:
         parameters = Command.parse_parameters(function_with_args)
         mock_from_parameter.assert_has_calls(
             [
